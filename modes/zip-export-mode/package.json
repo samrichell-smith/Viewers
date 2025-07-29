@@ -30,7 +30,8 @@
     "test:unit:ci": "jest --ci --runInBand --collectCoverage --passWithNoTests"
   },
   "peerDependencies": {
-    "@ohif/core": "^3.11.0-beta.108"
+    "@ohif/core": "^3.11.0-beta.108",
+    "zip-export-extension": "^0.0.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13"
