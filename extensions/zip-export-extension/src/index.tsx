@@ -1,4 +1,10 @@
+import React from 'react';
 import { id } from './id';
+import { Icon, ICONS } from '@ohif/ui';
+import ZipExportButtonComponent from './ZipExportButtonComponent';
+
+import { Icons } from '@ohif/ui-next';
+import customDownloadIcon from './assets/downloadCustomIcon';
 
 /**
  * You can remove any of the following modules if you don't need them.
@@ -16,7 +22,12 @@ export default {
    * (e.g. cornerstone, cornerstoneTools, ...) or registering any services that
    * this extension is providing.
    */
-  preRegistration: ({ servicesManager, commandsManager, configuration = {} }) => {},
+  preRegistration: ({ servicesManager, commandsManager, configuration = {} }) => {
+    // Example: in your setup/initialization code
+
+    // Add the icon to the registry
+    Icons.addIcon('DOWNLOAD_ICON', customDownloadIcon);
+  },
   /**
    * PanelModule should provide a list of panels that will be available in OHIF
    * for Modes to consume and render. Each panel is defined by a {name,
@@ -37,7 +48,51 @@ export default {
    * {name, defaultComponent, clickHandler }. Examples include radioGroupIcons and
    * splitButton toolButton that the default extension is providing.
    */
-  getToolbarModule: ({ servicesManager, commandsManager, extensionManager }) => {},
+  getToolbarModule: ({ servicesManager, commandsManager, extensionManager }) => {
+    return [
+      // {
+      //   name: 'ExportZip',
+      //   id: 'zipExportButton',
+      //   iconName: 'logo-ohif-small',
+      //   uiType: 'ohif.toolButton',
+      //   iconLabel: 'Export Zip',
+      //   defaultComponent: ZipExportButtonComponent,
+      //   clickHandler: ({ servicesManager }) => {
+      //     //TODO: export functiionality
+      //     const zipExportService = servicesManager.get('zipExportService');
+      //     zipExportService.export();
+      //   },
+      //   props: {
+      //     label: 'Export Zip', // Text label for the button
+      //     tooltip: 'Export Zip Archive', // Hover tooltip
+      //     icon: 'tool-download', // Use a relevant icon name from OHIF's icon set
+      //     // (assuming 'logo-ohif-small' might not be a general tool icon)
+      //     // If you define a command, you'd link it here:
+      //     commands: 'exportZipCommand',
+      //     // If you prefer to use the clickHandler directly (as in your original code),
+      //     // ensure your ZipExportButtonComponent handles an `onClick` prop
+      //     // and calls the `onInteraction` prop it receives from OHIF.
+      //     // clickHandler: ({ servicesManager }) => { /* ... */ },
+      //   },
+      // },
+      //
+      // {
+      //   name: 'ohif.splitButton',
+      //   defaultComponent: Icon,
+      //   clickHandler: () => {},
+      // },
+      {
+        name: 'ExportZip',
+        defaultComponent: ZipExportButtonComponent,
+        clickHandler: (evt, clickedBtn, btnSectionName) => {},
+      },
+      // {
+      //   name: 'ohif.toggle',
+      //   defaultComponent: Icon,
+      //   clickHandler: () => {},
+      // },
+    ];
+  },
   /**
    * LayoutTemplateMOdule should provide a list of layout templates that will be
    * available in OHIF for Modes to consume and use to layout the viewer.
