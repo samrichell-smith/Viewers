@@ -1,10 +1,9 @@
 import React from 'react';
 import { id } from './id';
-import { Icon, ICONS } from '@ohif/ui';
 import ZipExportButtonComponent from './ZipExportButtonComponent';
-
 import { Icons } from '@ohif/ui-next';
 import customDownloadIcon from './assets/downloadCustomIcon';
+import JSZip from 'jszip';
 
 /**
  * You can remove any of the following modules if you don't need them.
@@ -23,9 +22,6 @@ export default {
    * this extension is providing.
    */
   preRegistration: ({ servicesManager, commandsManager, configuration = {} }) => {
-    // Example: in your setup/initialization code
-
-    // Add the icon to the registry
     Icons.addIcon('DOWNLOAD_ICON', customDownloadIcon);
   },
   /**
@@ -50,47 +46,17 @@ export default {
    */
   getToolbarModule: ({ servicesManager, commandsManager, extensionManager }) => {
     return [
-      // {
-      //   name: 'ExportZip',
-      //   id: 'zipExportButton',
-      //   iconName: 'logo-ohif-small',
-      //   uiType: 'ohif.toolButton',
-      //   iconLabel: 'Export Zip',
-      //   defaultComponent: ZipExportButtonComponent,
-      //   clickHandler: ({ servicesManager }) => {
-      //     //TODO: export functiionality
-      //     const zipExportService = servicesManager.get('zipExportService');
-      //     zipExportService.export();
-      //   },
-      //   props: {
-      //     label: 'Export Zip', // Text label for the button
-      //     tooltip: 'Export Zip Archive', // Hover tooltip
-      //     icon: 'tool-download', // Use a relevant icon name from OHIF's icon set
-      //     // (assuming 'logo-ohif-small' might not be a general tool icon)
-      //     // If you define a command, you'd link it here:
-      //     commands: 'exportZipCommand',
-      //     // If you prefer to use the clickHandler directly (as in your original code),
-      //     // ensure your ZipExportButtonComponent handles an `onClick` prop
-      //     // and calls the `onInteraction` prop it receives from OHIF.
-      //     // clickHandler: ({ servicesManager }) => { /* ... */ },
-      //   },
-      // },
-      //
-      // {
-      //   name: 'ohif.splitButton',
-      //   defaultComponent: Icon,
-      //   clickHandler: () => {},
-      // },
       {
-        name: 'ExportZip',
+        id: 'ExportZip',
+
         defaultComponent: ZipExportButtonComponent,
-        clickHandler: (evt, clickedBtn, btnSectionName) => {},
+        props: {
+          label: 'Export as Zip',
+          tooltip: 'Export current study as a Zip archive',
+          commands: 'exportZipCommand',
+        },
+        evaluate: 'evaluate.action',
       },
-      // {
-      //   name: 'ohif.toggle',
-      //   defaultComponent: Icon,
-      //   clickHandler: () => {},
-      // },
     ];
   },
   /**
@@ -124,13 +90,48 @@ export default {
    * object of functions, definitions is an object of available commands, their
    * options, and defaultContext is the default context for the command to run against.
    */
-  getCommandsModule: ({ servicesManager, commandsManager, extensionManager }) => {},
-  /**
-   * ContextModule should provide a list of context that will be available in OHIF
-   * and will be provided to the Modes. A context is a state that is shared OHIF.
-   * Context is defined by an object of { name, context, provider }. Examples include
-   * the measurementTracking context provided by the measurementTracking extension.
-   */
+  getCommandsModule: ({ servicesManager, commandsManager, extensionManager }) => {
+    // Destructure necessary services
+    const { uiNotificationService } = servicesManager.services;
+    // We'll add other services (viewportGridService, displaySetService, etc.) in later steps
+
+    return {
+      definitions: {
+        exportZipCommand: {
+          commandFn: async ({ commandOptions }) => {
+            console.log(`--- Functional Step 1: "exportZipCommand" invoked! ---`);
+
+            try {
+              console.log('--- Initializing JSZip instance ---');
+              const zip = new JSZip();
+
+              // Confirm initialization with a notification
+              uiNotificationService.show({
+                title: 'Zip Export',
+                message: 'JSZip initialized successfully! Ready to add files.',
+                type: 'info',
+                duration: 2000,
+              });
+
+              console.log('JSZip object:', zip);
+            } catch (error) {
+              uiNotificationService.show({
+                title: 'Export Error',
+                message: `Failed to initialize JSZip: ${error.message}`,
+                type: 'error',
+                duration: 4000,
+              });
+              console.error('Error initializing JSZip:', error);
+            }
+          },
+          options: {},
+          context: 'DEFAULT',
+        },
+      },
+      defaultContext: 'VIEWER',
+    };
+  },
+
   getContextModule: ({ servicesManager, commandsManager, extensionManager }) => {},
   /**
    * DataSourceModule should provide a list of data sources to be used in OHIF.
