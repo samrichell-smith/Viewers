@@ -654,6 +654,18 @@ const toolbarButtons: Button[] = [
       },
     },
   },
+  {
+    id: 'export-zip-button',
+    uiType: 'ohif.toolButton',
+    props: {
+      icon: 'tool-download',
+      label: 'Export as Zip',
+      tooltip: 'Export current study as a Zip archive',
+      commands: 'exportZipCommand',
+
+      evaluate: 'evaluate.action',
+    },
+  },
   // {
   //   id: 'Undo',
   //   uiType: 'ohif.toolButton',
