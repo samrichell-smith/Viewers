@@ -1,6 +1,8 @@
-// extensions/zip-export-extension/src/components/ZipExportButtonComponent.js
 import React from 'react';
 import { Button } from '@ohif/ui-next';
+
+// Toolbar button component for ZIP export functionality.
+// Integrates with OHIF's toolbar system to trigger the export command.
 
 function ZipExportButtonComponent({ id, label, tooltip, commands, onInteraction }) {
   const handleClick = () => {
