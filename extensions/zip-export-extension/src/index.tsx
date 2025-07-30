@@ -56,7 +56,7 @@ export default {
                   title: 'Export Error',
                   message: 'Required OHIF services not available.',
                   type: 'error',
-                  duration: 5000,
+                  duration: 4000,
                 });
                 console.error('Export failed: Missing required services');
                 return;

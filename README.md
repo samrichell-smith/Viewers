@@ -1,336 +1,312 @@
-<!-- prettier-ignore-start -->
-<div align="center">
-  <h1>OHIF Medical Imaging Viewer</h1>
-  <p><strong>The OHIF Viewer</strong> is a zero-footprint medical image viewer
-provided by the <a href="https://ohif.org/">Open Health Imaging Foundation (OHIF)</a>. It is a configurable and extensible progressive web application with out-of-the-box support for image archives which support <a href="https://www.dicomstandard.org/using/dicomweb/">DICOMweb</a>.</p>
-</div>
 
+# OHIF Export Extension Submission - Sam Richell-Smith
 
-<div align="center">
-  <a href="https://docs.ohif.org/"><strong>Read The Docs</strong></a>
-</div>
-<div align="center">
-  <a href="https://viewer.ohif.org/">Live Demo</a> |
-  <a href="https://ui.ohif.org/">Component Library</a>
-</div>
-<div align="center">
-  📰 <a href="https://ohif.org/news/"><strong>Join OHIF Newsletter</strong></a> 📰
-</div>
-<div align="center">
-  📰 <a href="https://ohif.org/news/"><strong>Join OHIF Newsletter</strong></a> 📰
-</div>
+Date Submitted - July 30, 2025
 
+Repo Link - <https://github.com/samrichell-smith/Viewers>
 
+## Overview
 
-<hr />
+I've developed a complete OHIF extension that fulfils all requirements of the coding challenge, implementing:
 
-[![NPM version][npm-version-image]][npm-url]
-[![MIT License][license-image]][license-url]
-[![This project is using Percy.io for visual regression testing.][percy-image]](percy-url)
-<!-- [![NPM downloads][npm-downloads-image]][npm-url] -->
-<!-- [![Pulls][docker-pulls-img]][docker-image-url] -->
-<!-- [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOHIF%2FViewers.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FOHIF%2FViewers?ref=badge_shield) -->
+1. A custom OHIF extension
+2. A dedicated Export Mode
+3. A toolbar button with download functionality
+4. Full export logic producing ZIP files containing:
+   - Viewport JPG captures
+   - Structured DICOM metadata
 
-<!-- [![Netlify Status][netlify-image]][netlify-url] -->
-<!-- [![CircleCI][circleci-image]][circleci-url] -->
-<!-- [![codecov][codecov-image]][codecov-url] -->
-<!-- [![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors) -->
-<!-- prettier-ignore-end -->
+## Installation & Usage
 
+### Prerequisites
 
-|     |  | |
-| :-: | :---  | :--- |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-measurements.webp?raw=true" alt="Measurement tracking" width="350"/> | Measurement Tracking | [Demo](https://viewer.ohif.org/viewer?StudyInstanceUIDs=1.3.6.1.4.1.25403.345050719074.3824.20170125095438.5) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-segmentation.webp?raw=true" alt="Segmentations" width="350"/> | Labelmap Segmentations  | [Demo](https://viewer.ohif.org/viewer?StudyInstanceUIDs=1.3.12.2.1107.5.2.32.35162.30000015050317233592200000046) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-ptct.webp?raw=true" alt="Hanging Protocols" width="350"/> | Fusion and Custom Hanging protocols  | [Demo](https://viewer.ohif.org/tmtv?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.7009.2403.334240657131972136850343327463) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-volume-rendering.webp?raw=true" alt="Volume Rendering" width="350"/> | Volume Rendering  | [Demo](https://viewer.ohif.org/viewer?StudyInstanceUIDs=1.3.6.1.4.1.25403.345050719074.3824.20170125095438.5&hangingprotocolId=mprAnd3DVolumeViewport) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-pdf.webp?raw=true" alt="PDF" width="350"/> | PDF  | [Demo](https://viewer.ohif.org/viewer?StudyInstanceUIDs=2.25.317377619501274872606137091638706705333) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-rtstruct.webp?raw=true" alt="RTSTRUCT" width="350"/> | RT STRUCT  | [Demo](https://viewer.ohif.org/viewer?StudyInstanceUIDs=1.3.6.1.4.1.5962.99.1.2968617883.1314880426.1493322302363.3.0) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-4d.webp?raw=true" alt="4D" width="350"/> | 4D  | [Demo](https://viewer.ohif.org/dynamic-volume?StudyInstanceUIDs=2.25.232704420736447710317909004159492840763) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/demo-video.webp?raw=true" alt="VIDEO" width="350"/> | Video  | [Demo](https://viewer.ohif.org/viewer?StudyInstanceUIDs=2.25.96975534054447904995905761963464388233) |
-| <img src="https://github.com/OHIF/Viewers/blob/master/platform/docs/docs/assets/img/microscopy.webp?raw=true" alt="microscopy" width="350"/> | Slide Microscopy  | [Demo](https://viewer.ohif.org/microscopy?StudyInstanceUIDs=2.25.141277760791347900862109212450152067508) |
+- Node.js v18+
+- Yarn 1.20+
+- Git
 
-## About
-
-The OHIF Viewer can retrieve
-and load images from most sources and formats; render sets in 2D, 3D, and
-reconstructed representations; allows for the manipulation, annotation, and
-serialization of observations; supports internationalization, OpenID Connect,
-offline use, hotkeys, and many more features.
-
-Almost everything offers some degree of customization and configuration. If it
-doesn't support something you need, we accept pull requests and have an ever
-improving Extension System.
-
-## Why Choose Us
-
-### Community & Experience
-
-The OHIF Viewer is a collaborative effort that has served as the basis for many
-active, production, and FDA Cleared medical imaging viewers. It benefits from
-our extensive community's collective experience, and from the sponsored
-contributions of individuals, research groups, and commercial organizations.
-
-### Built to Adapt
-
-After more than 8-years of integrating with many companies and organizations,
-The OHIF Viewer has been rebuilt from the ground up to better address the
-varying workflow and configuration needs of its many users. All of the Viewer's
-core features are built using it's own extension system. The same extensibility
-that allows us to offer:
-
-- 2D and 3D medical image viewing
-- Multiplanar Reconstruction (MPR)
-- Maximum Intensity Project (MIP)
-- Whole slide microscopy viewing
-- PDF and Dicom Structured Report rendering
-- Segmentation rendering as labelmaps and contours
-- User Access Control (UAC)
-- Context specific toolbar and side panel content
-- and many others
-
-Can be leveraged by you to customize the viewer for your workflow, and to add
-any new functionality you may need (and wish to maintain privately without
-forking).
-
-### Support
-
-- [Report a Bug 🐛](https://github.com/OHIF/Viewers/issues/new?assignees=&labels=Community%3A+Report+%3Abug%3A%2CAwaiting+Reproduction&projects=&template=bug-report.yml&title=%5BBug%5D+)
-- [Request a Feature 🚀](https://github.com/OHIF/Viewers/issues/new?assignees=&labels=Community%3A+Request+%3Ahand%3A&projects=&template=feature-request.yml&title=%5BFeature+Request%5D+)
-- [Ask a Question 🤗](community.ohif.org)
-- [Slack Channel](https://join.slack.com/t/cornerstonejs/shared_invite/zt-1r8xb2zau-dOxlD6jit3TN0Uwf928w9Q)
-
-For commercial support, academic collaborations, and answers to common
-questions; please use [Get Support](https://ohif.org/get-support/) to contact
-us.
-
-
-## Developing
-
-### Branches
-
-#### `master` branch - The latest dev (beta) release
-
-- `master` - The latest dev release
-
-This is typically where the latest development happens. Code that is in the master branch has passed code reviews and automated tests, but it may not be deemed ready for production. This branch usually contains the most recent changes and features being worked on by the development team. It's often the starting point for creating feature branches (where new features are developed) and hotfix branches (for urgent fixes).
-
-Each package is tagged with beta version numbers, and published to npm such as `@ohif/ui@3.6.0-beta.1`
-
-### `release/*` branches - The latest stable releases
-Once the `master` branch code reaches a stable, release-ready state, we conduct a comprehensive code review and QA testing. Upon approval, we create a new release branch from `master`. These branches represent the latest stable version considered ready for production.
-
-For example, `release/3.5` is the branch for version 3.5.0, and `release/3.6` is for version 3.6.0. After each release, we wait a few days to ensure no critical bugs. If any are found, we fix them in the release branch and create a new release with a minor version bump, e.g., 3.5.1 in the `release/3.5` branch.
-
-Each package is tagged with version numbers and published to npm, such as `@ohif/ui@3.5.0`. Note that `master` is always ahead of the `release` branch. We publish docker builds for both beta and stable releases.
-
-Here is a schematic representation of our development workflow:
-
-![alt text](platform/docs/docs/assets/img/github-readme-branches-Jun2024.png)
-
-
-
-
-
-### Requirements
-
-- [Yarn 1.20.0+](https://yarnpkg.com/en/docs/install)
-- [Node 18+](https://nodejs.org/en/)
-- Yarn Workspaces should be enabled on your machine:
-  - `yarn config set workspaces-experimental true`
-
-### Getting Started
-
-1. [Fork this repository][how-to-fork]
-2. [Clone your forked repository][how-to-clone]
-   - `git clone https://github.com/YOUR-USERNAME/Viewers.git`
-3. Navigate to the cloned project's directory
-4. Add this repo as a `remote` named `upstream`
-   - `git remote add upstream https://github.com/OHIF/Viewers.git`
-5. `yarn install` to restore dependencies and link projects
-
-#### To Develop
-
-_From this repository's root directory:_
+## Setup
 
 ```bash
-# Enable Yarn Workspaces
-yarn config set workspaces-experimental true
+# Clone the repository
+git clone https://github.com/samrichell-smith/Viewers.git
 
-# Restore dependencies
+#Navigate to the project directory
+cd Viewers
+
+#Install dependencies
 yarn install
+
+#Launch local development server
+yarn run dev
 ```
 
-## Commands
+## Usage
 
-These commands are available from the root directory. Each project directory
-also supports a number of commands that can be found in their respective
-`README.md` and `package.json` files.
+- Access <http://localhost:3000>
 
-| Yarn Commands                | Description                                                   |
-| ---------------------------- | ------------------------------------------------------------- |
-| **Develop**                  |                                                               |
-| `dev`              | Default development experience for Viewer                     |
-| `dev:fast`             | Our experimental fast dev mode that uses rsbuild instead of webpack                     |
-| `test:unit`                  | Jest multi-project test runner; overall coverage              |
-| **Deploy**                   |                                                               |
-| `build`\*                    | Builds production output for our PWA Viewer                   |  |
+- Load a DICOM study, or choose from the preloaded options
 
-\* - For more information on different builds, check out our [Deploy
-Docs][deployment-docs]
+- Select "Zip Export Mode" from mode selector
 
-## Project
+- Click the Export as Zip button in the toolbar, denoted by the download icon
 
-The OHIF Medical Image Viewing Platform is maintained as a
-[`monorepo`][monorepo]. This means that this repository, instead of containing a
-single project, contains many projects. If you explore our project structure,
-you'll see the following:
+- Download will appear as report_[PatientName]_[StudyDate].zip
+
+- Extract the contents of the zip file and it should contain the following:
 
 ```bash
-.
-├── extensions               #
-│   ├── _example             # Skeleton of example extension
-│   ├── default              # basic set of useful functionalities (datasources, panels, etc)
-│   ├── cornerstone       # image rendering and tools w/ Cornerstone3D
-│   ├── cornerstone-dicom-sr # DICOM Structured Report rendering and export
-│   ├── cornerstone-dicom-sr # DICOM Structured Report rendering and export
-│   ├── cornerstone-dicom-seg # DICOM Segmentation rendering and export
-│   ├── cornerstone-dicom-rt # DICOM RTSTRUCT rendering
-│   ├── cornerstone-microscopy # Whole Slide Microscopy rendering
-│   ├── dicom-pdf # PDF rendering
-│   ├── dicom-video # DICOM RESTful Services
-│   ├── measurement-tracking # Longitudinal measurement tracking
-│   ├── tmtv # Total Metabolic Tumor Volume (TMTV) calculation
-|
-
-│
-├── modes                    #
-│   ├── _example             # Skeleton of example mode
-│   ├── basic-dev-mode       # Basic development mode
-│   ├── longitudinal         # Longitudinal mode (measurement tracking)
-│   ├── tmtv       # Total Metabolic Tumor Volume (TMTV) calculation mode
-│   └── microscopy          # Whole Slide Microscopy mode
-│
-├── platform                 #
-│   ├── core                 # Business Logic
-│   ├── i18n                 # Internationalization Support
-│   ├── ui                   # React component library
-│   ├── docs                 # Documentation
-│   └── viewer               # Connects platform and extension projects
-│
-├── ...                      # misc. shared configuration
-├── lerna.json               # MonoRepo (Lerna) settings
-├── package.json             # Shared devDependencies and commands
-└── README.md                # This file
+report_DATSCAN1_20221121/
+├── image.jpg
+└── metadata.json
 ```
 
-## Acknowledgments
+metadata.json Example:
 
-To acknowledge the OHIF Viewer in an academic publication, please cite
+```json
+{
+  "PatientName": "DATSCAN1",
+  "StudyDate": "20221121",
+  "StudyInstanceUID": "1.2.276.0.7230010.3.1.2.447481088.1.1669202398.851612",
+  "DisplaySetInstanceUID": "c200cc59-a6d7-8221-502c-55fed107b562",
+  "ExportTimestamp": "2025-07-30T08:06:43.491Z"
+}
+```
 
-> _Open Health Imaging Foundation Viewer: An Extensible Open-Source Framework
-> for Building Web-Based Imaging Applications to Support Cancer Research_
->
-> Erik Ziegler, Trinity Urban, Danny Brown, James Petts, Steve D. Pieper, Rob
-> Lewis, Chris Hafey, and Gordon J. Harris
->
-> _JCO Clinical Cancer Informatics_, no. 4 (2020), 336-345, DOI:
-> [10.1200/CCI.19.00131](https://www.doi.org/10.1200/CCI.19.00131)
->
-> Open-Access on Pubmed Central:
-> https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7259879/
+# Technical Implementation
 
-or, for v1, please cite:
+### 1. Custom OHIF Extension
 
-> _LesionTracker: Extensible Open-Source Zero-Footprint Web Viewer for Cancer
-> Imaging Research and Clinical Trials_
->
-> Trinity Urban, Erik Ziegler, Rob Lewis, Chris Hafey, Cheryl Sadow, Annick D.
-> Van den Abbeele and Gordon J. Harris
->
-> _Cancer Research_, November 1 2017 (77) (21) e119-e122 DOI:
-> [10.1158/0008-5472.CAN-17-0334](https://www.doi.org/10.1158/0008-5472.CAN-17-0334)
+- Generated using OHIF's CLI (`yarn run cli create-extension`)
+- Integrated with OHIF's command system for export functionality
+- Custom SVG icon component
+- Notification system integration for user feedback
 
-**Note:** If you use or find this repository helpful, please take the time to
-star this repository on GitHub. This is an easy way for us to assess adoption
-and it can help us obtain future funding for the project.
+### 2. Export Mode
 
-This work is supported primarily by the National Institutes of Health, National
-Cancer Institute, Informatics Technology for Cancer Research (ITCR) program,
-under a
-[grant to Dr. Gordon Harris at Massachusetts General Hospital (U24 CA199460)](https://projectreporter.nih.gov/project_info_description.cfm?aid=8971104).
+- Created via OHIF mode template (`yarn run cli create-mode`)
+- Dedicated route (`/exportZip`)
+- Toolbar service integration
 
-[NCI Imaging Data Commons (IDC) project](https://imaging.datacommons.cancer.gov/) supported the development of new features and bug fixes marked with ["IDC:priority"](https://github.com/OHIF/Viewers/issues?q=is%3Aissue+is%3Aopen+label%3AIDC%3Apriority),
-["IDC:candidate"](https://github.com/OHIF/Viewers/issues?q=is%3Aissue+is%3Aopen+label%3AIDC%3Acandidate) or ["IDC:collaboration"](https://github.com/OHIF/Viewers/issues?q=is%3Aissue+is%3Aopen+label%3AIDC%3Acollaboration). NCI Imaging Data Commons is supported by contract number 19X037Q from
-Leidos Biomedical Research under Task Order HHSN26100071 from NCI. [IDC Viewer](https://learn.canceridc.dev/portal/visualization) is a customized version of the OHIF Viewer.
+### 3. Toolbar Integration
 
-This project is tested with BrowserStack. Thank you for supporting open-source!
+- Added to main toolbar in prominent position
 
-## License
 
-MIT © [OHIF](https://github.com/OHIF)
+### 4. Export Logic
 
-<!--
-  Links
-  -->
+**Key Components:**
+- DICOM metadata extraction (PatientName, StudyDate)
+- Viewport canvas capture as JPEG
+- ZIP packaging with JSZip
+- Comprehensive error states
 
-<!-- prettier-ignore-start -->
-<!-- Badges -->
-[lerna-image]: https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg
-[lerna-url]: https://lerna.js.org/
-[netlify-image]: https://api.netlify.com/api/v1/badges/32708787-c9b0-4634-b50f-7ca41952da77/deploy-status
-[netlify-url]: https://app.netlify.com/sites/ohif-dev/deploys
-[all-contributors-image]: https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square
-[circleci-image]: https://circleci.com/gh/OHIF/Viewers.svg?style=svg
-[circleci-url]: https://circleci.com/gh/OHIF/Viewers
-[codecov-image]: https://codecov.io/gh/OHIF/Viewers/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/OHIF/Viewers/branch/master
-[prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-[semantic-url]: https://github.com/semantic-release/semantic-release
-<!-- ROW -->
-[npm-url]: https://npmjs.org/package/@ohif/app
-[npm-downloads-image]: https://img.shields.io/npm/dm/@ohif/app.svg?style=flat-square
-[npm-version-image]: https://img.shields.io/npm/v/@ohif/app.svg?style=flat-square
-[docker-pulls-img]: https://img.shields.io/docker/pulls/ohif/viewer.svg?style=flat-square
-[docker-image-url]: https://hub.docker.com/r/ohif/app
-[license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
-[license-url]: LICENSE
-[percy-image]: https://percy.io/static/images/percy-badge.svg
-[percy-url]: https://percy.io/Open-Health-Imaging-Foundation/OHIF-Viewer
-<!-- Links -->
-[monorepo]: https://en.wikipedia.org/wiki/Monorepo
-[how-to-fork]: https://help.github.com/en/articles/fork-a-repo
-[how-to-clone]: https://help.github.com/en/articles/fork-a-repo#step-2-create-a-local-clone-of-your-fork
-[ohif-architecture]: https://docs.ohif.org/architecture/index.html
-[ohif-extensions]: https://docs.ohif.org/architecture/index.html
-[deployment-docs]: https://docs.ohif.org/deployment/
-[react-url]: https://reactjs.org/
-[pwa-url]: https://developers.google.com/web/progressive-web-apps/
-[ohif-viewer-url]: https://www.npmjs.com/package/@ohif/app
-[configuration-url]: https://docs.ohif.org/configuring/
-[extensions-url]: https://docs.ohif.org/extensions/
-<!-- Platform -->
-[platform-core]: platform/core/README.md
-[core-npm]: https://www.npmjs.com/package/@ohif/core
-[platform-i18n]: platform/i18n/README.md
-[i18n-npm]: https://www.npmjs.com/package/@ohif/i18n
-[platform-ui]: platform/ui/README.md
-[ui-npm]: https://www.npmjs.com/package/@ohif/ui
-[platform-viewer]: platform/app/README.md
-[viewer-npm]: https://www.npmjs.com/package/@ohif/app
-<!-- Extensions -->
-[extension-cornerstone]: extensions/cornerstone/README.md
-[cornerstone-npm]: https://www.npmjs.com/package/@ohif/extension-cornerstone
-[extension-dicom-html]: extensions/dicom-html/README.md
-[html-npm]: https://www.npmjs.com/package/@ohif/extension-dicom-html
-[extension-dicom-microscopy]: extensions/dicom-microscopy/README.md
-[microscopy-npm]: https://www.npmjs.com/package/@ohif/extension-dicom-microscopy
-[extension-dicom-pdf]: extensions/dicom-pdf/README.md
-[pdf-npm]: https://www.npmjs.com/package/@ohif/extension-dicom-pdf
-[extension-vtk]: extensions/vtk/README.md
-[vtk-npm]: https://www.npmjs.com/package/@ohif/extension-vtk
-<!-- prettier-ignore-end -->
+### Project Structure
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOHIF%2FViewers.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2FOHIF%2FViewers?ref=badge_large&issueType=license)
+```bash
+/extensions/zip-export-extension/
+├── src/
+│ ├── assets/
+│ │ └── downloadCustomIcon.tsx
+│ ├── id.js
+│ ├── index.tsx
+│ └── ZipExportButton.tsx
+/modes/zip-export-mode/
+├── src/
+│ ├── id.js
+│ ├── index.tsx
+│ ├── initToolGroups.js
+│ └── toolbarButtons.ts
+```
+
+# Development Process
+
+## Approach
+
+### Initial Research Phase
+
+- I worked through OHIF's docs from "Getting Started", learning about things such as the OHIF CLI, Extensions and Modes. Some parts of this definitely didn't make complete sense to me on initial glance, so I did some additional research, and looked into how these snippets were actually implemented in the pre-exisitng extensions, as well as talking the concepts over with AI tools like Claude to make sure I was thinking about it the right way.
+
+- The next step was to actually go in and have a good look and play around with the existing extensions, and I would regularly go back to doing this if something wasn't quite working or I got stuck later on in the process.
+
+### Implementation Strategy
+
+- I first followed the docs for the CLI tool and created template implementations of my extension and mode, then linked them and made sure they were loading.
+
+- From here I referred back and forth both to the docs and how other modes and extensions were implemented, such as the longitudinal mode, to get the toolbar loaded and working with the base extension's toolbar modules.
+
+- I continued this incremental process of adding and connecting parts, regularly testing the extension and mode locally using console logs.
+
+- I finally got to the point where the extension and mode were properly set up and configured, and all that was left to add was the logic of the export function. Here I went back to the docs to learn how the command modules worked, as well as doing some research on JSZip and DICOM as a standard.
+
+### Validation
+
+- In the key export command function itself, there's a lot that can go wrong with all the information being parsed and moved around, so I made use of a lot of try-catch and the console for error handling. I also used the OHIF ui pop ups to give the user info if the export was successful or encountered an error, so they wouldn't have to dig through the logs. One example of this is the fallback methods for getting the patient name from the DICOM metadata, which proved very troublesome!
+
+- I finally tested the finished feature manually on a series of inputs of a range of different types to ensure everything went smoothly, and made sure the exported metadata was correct. Something I would definitely do with more time would be to add actual unit tests, as doing it by hand, as I did, is certainly not thorough.
+
+## Challenges & Solutions
+
+### 1. DICOM Metadata Validation
+Challenge:
+
+Parsing OHIF's Proxy-wrapped DICOM tags often returned inconsistent results when tested with different studies, some working some failing
+
+StudyDate/PatientName formats varied across institutions
+
+Needed to ensure valid JSON output for clinical systems
+
+Solution:
+
+A series of fallback checks to cover all cases
+
+```typescript
+// Extract patient name from DICOM metadata
+// PatientName is stored as a Proxy Array in OHIF's DICOM parser
+if (
+  displaySet.instances &&
+  displaySet.instances[0] &&
+  displaySet.instances[0].PatientName
+) {
+  const patientNameProxy = displaySet.instances[0].PatientName;
+
+  try {
+    // Use toString() method for Proxy Array conversion
+    if (typeof patientNameProxy.toString === 'function') {
+      const nameString = patientNameProxy.toString();
+      if (nameString && nameString !== '[object Object]' && nameString !== '') {
+        patientName = nameString;
+      }
+    }
+
+    // Fallback: toJSON() method
+    if (
+      patientName === 'Unknown_Patient' &&
+      typeof patientNameProxy.toJSON === 'function'
+    ) {
+      const nameJSON = patientNameProxy.toJSON();
+      if (typeof nameJSON === 'string' && nameJSON !== '') {
+        patientName = nameJSON;
+      } else if (nameJSON && nameJSON.Alphabetic) {
+        patientName = nameJSON.Alphabetic;
+      }
+    }
+
+    // Fallback: Direct array access
+    if (patientName === 'Unknown_Patient' && patientNameProxy[0]) {
+      const nameObj = patientNameProxy[0];
+      if (typeof nameObj === 'string') {
+        patientName = nameObj;
+      } else if (nameObj.Alphabetic) {
+        patientName = nameObj.Alphabetic;
+      } else if (nameObj.value) {
+        patientName = nameObj.value;
+      }
+    }
+  } catch (error) {
+    console.warn('PatientName extraction failed, using default');
+  }
+}
+```
+
+### 2. Silent Failure Prevention
+
+Challenge:
+Critical errors could occur without user feedback regarding:
+
+Missing services
+
+Invalid viewports
+
+Canvas capture failures
+
+Solution :
+Added console.error() and try catch blocks to validate each step of the process, and inform the user of failure points through the use of ui pop ups
+
+```typescript
+// Validate required services
+if (!viewportGridService || !displaySetService) {
+  uiNotificationService.show({
+    title: 'Export Error',
+    message: 'Required OHIF services not available.',
+    type: 'error',
+    duration: 4000,
+  });
+  console.error('Export failed: Missing required services');
+  return;
+}
+```
+
+### 3. Extension-Mode linking and toolbar set up
+
+Challenge:
+It was quite a puzzle to understand how the different files and modules interacted, especially in regards to setting up the toolbar and adding my new extension module to it.
+
+Solution:
+While not incredibly difficult per se, getting this right involved a lot of back and forth with the docs, as well as trying to understand how the predefined extensions and modes implemented the toolbar, such as the longitudinal mode. This was the most helpful solution in the end, and I built the toolbarButtons.ts and initToolGroups.js files to mirror the examples I learnt from
+
+```typescript
+// From toolbarButtons.ts
+{
+    id: 'export-zip-button',
+    uiType: 'ohif.toolButton',
+    props: {
+      icon: 'DOWNLOAD_ICON',
+      label: 'Export as Zip',
+      tooltip: 'Export current study as a Zip archive',
+      commands: 'exportZipCommand',
+      evaluate: 'evaluate.action',
+    },
+  },
+```
+
+### 4. Implementing JSZip
+
+Challenge:
+Learning a new and unfamiliar library with a key role to play in my extension.
+
+Solution:
+I researched and read through the JSZip docs, particularly the how to/examples section about generating a zip file.
+
+```typescript
+zip.file('image.jpg', imageBlob);
+
+// Create metadata JSON
+const metadata = {
+  PatientName: patientName,
+  StudyDate: studyDate,
+  StudyInstanceUID: StudyInstanceUID,
+  DisplaySetInstanceUID: displaySetInstanceUID,
+  ExportTimestamp: new Date().toISOString(),
+};
+
+zip.file('metadata.json', JSON.stringify(metadata, null, 2));
+```
+
+## Key Learnings
+
+- Extensions are a lot more integrated with the rest of the program than I imagined, they aren't just something that runs on top.
+
+- Well written documentation and strong and clear examples of implementation, such as I had access to here, are incredibly helpful with getting to grips with a new technology or project.
+
+- Docs can be outdated, and discrepancies between current practices and documentation can cause issues, such as with ToolbarIcons in @ohif/ui here.
+
+- Real world data can be messy, and not always formatted or provided in a way you expect, so we need to plan for this.
+
+### Problem-Solving Approach
+
+- I plan how I'm going to roughly approach a problem first, by consulting resources, past examples and those with expertise. Then, even if I don't have a perfect plan going in, I start building, going back and forth with these resources if something isn't working or I'm stuck and need guidance. I find I learn a lot more at this stage, actually seeing how the concepts and components work and interact vs just reading about them.
+
+- I try to get some basic implementation working, even if it doesn't have any of the desired final behaviour yet, its somewhere to build from. An example of this here is first getting the extension and mode I created set up, linked and visible on the application, even though the icon was non-functional, it made it simpler to build the functionality from there, as I actually had the basics working so any changes I made could easily be seen and tested.
+
+- As I build features, for instance the export command module here, I regularly test it by console logging at various points throughout, to see the execution path my code is actually taking, as well as seeing the value of various objects and variables at certain points, which helps me to quickly identify when its behaving as expected vs something has gone wrong. An example of this in this project was failing to extract the study name and date for the metadata, and this approach allowed me to quickly identify that there wasn't even an object being passed into displaySet.
+
+## Future Improvements
+
+- Annotating exports, such as with the measurement tools extension. Currently any annotations are not preserved on the export, and this could be a nice improvement for some cases, for instance if a doctor has drawn some lines to identify some key features to patients, it would be good if they could be preserved when exported so the patient could still see them when they have their copy of the image.
+
+- Multi-viewport export capability, so that multiple images and their metadata can be exported in the same zip, or even an option to export a whole study at once. This would definitely speed up the process if one wanted to export and save more than just specific images from DICOM.
+
+- Cloud integration, downloading the zip export locally may be fine in many cases, it may not be ideal in clinics that want to deal with large amounts of data, and being able to export it directly to the cloud, a defined database, or somewhere els,e as opposed to just a browser download could speed up these workflows significantly.
+
+This implementation represents my original work completed for the OHIF Coding Challenge.
+© Sam Richell-Smith 2025 | MIT
