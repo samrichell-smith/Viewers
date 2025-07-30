@@ -1,5 +1,6 @@
 import { hotkeys } from '@ohif/core';
-import { initToolGroups, toolbarButtons } from '@ohif/mode-longitudinal';
+import toolbarButtons from './toolbarButtons';
+import initToolGroups from './initToolGroups';
 import { id } from './id';
 
 const ohif = {
@@ -21,6 +22,7 @@ const cornerstone = {
 const extensionDependencies = {
   '@ohif/extension-default': '^3.0.0',
   '@ohif/extension-cornerstone': '^3.0.0',
+  'zip-export-extension': '^0.0.1',
 };
 
 function modeFactory({ modeConfiguration }) {
@@ -30,12 +32,12 @@ function modeFactory({ modeConfiguration }) {
      * is used to identify the mode in the viewer's state.
      */
     id,
-    routeName: 'template',
+    routeName: 'zipExport',
     /**
      * Mode name, which is displayed in the viewer's UI in the workList, for the
      * user to select the mode.
      */
-    displayName: 'Template Mode',
+    displayName: 'Zip Export Mode',
     /**
      * Runs when the Mode Route is mounted to the DOM. Usually used to initialize
      * Services and other resources.
@@ -45,11 +47,11 @@ function modeFactory({ modeConfiguration }) {
 
       measurementService.clearMeasurements();
 
-      // Init Default and SR ToolGroups
       initToolGroups(extensionManager, toolGroupService, commandsManager);
 
       toolbarService.register([...toolbarButtons]);
       toolbarService.updateSection('primary', [
+        'export-zip-button',
         'MeasurementTools',
         'Zoom',
         'Pan',
